@@ -8,10 +8,6 @@ import (
 	"net/http"
 )
 
-var azurePAT = ""
-var azureOrg = ""
-var azurePrj = ""
-
 type BuildList struct {
 	Count int          `json:"count"`
 	Value []BuildValue `json:"value"`
@@ -78,7 +74,7 @@ type ValidationResult struct {
 	Message string `json:"message"`
 }
 
-func GetBuildsDefinitions() {
+func GetBuildsDefinitions(azureOrg, azurePrj, azurePAT string) {
 	// build request
 	reqAuth := fmt.Sprintf("username:%s", azurePAT)
 	reqBearer := fmt.Sprintf("Basic %s", base64.StdEncoding.EncodeToString([]byte(reqAuth)))
