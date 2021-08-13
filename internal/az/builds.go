@@ -74,7 +74,7 @@ type ValidationResult struct {
 	Message string `json:"message"`
 }
 
-func GetBuildsDefinitions(azureOrg, azurePrj, azurePAT string) {
+func GetBuildList(azureOrg, azurePrj, azurePAT string) *BuildList {
 	// build request
 	reqAuth := fmt.Sprintf("username:%s", azurePAT)
 	reqBearer := fmt.Sprintf("Basic %s", base64.StdEncoding.EncodeToString([]byte(reqAuth)))
@@ -102,8 +102,5 @@ func GetBuildsDefinitions(azureOrg, azurePrj, azurePAT string) {
 		panic(err)
 	}
 
-	fmt.Printf("Builds count %d\n", bl.Count)
-	for i, v := range bl.Value {
-		fmt.Printf("  [%d] def:%v %s id:%d status:%s result:%s\n", i, v.Definition.Id, v.Definition.Name, v.Id, v.Status, v.Result)
-	}
+	return &bl
 }
