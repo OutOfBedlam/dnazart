@@ -41,4 +41,4 @@ else
 fi
 
 # Remove build directory.
-rm -rf $bdir
+rm -f $bdir
