@@ -6,6 +6,23 @@
 $ export AZURE_DEVOPS_EXT_PAT='xxxxxxxx'
 ```
 
+## Usage
+
+```bash
+$ dnazart --help
+
+Usage: dnazart COMMAND [arg...]
+
+download artifact files from Azure DevOps Pipelines
+                  
+Commands:         
+  version         show version
+  download        download artifacts
+  hist, history   list builds history
+                  
+Run 'dnazart COMMAND --help' for more information on a command.
+```
+
 ## List build history
 
 ```bash
@@ -25,3 +42,51 @@ BuildId  BuildNumber                     Status     FinishTime
 115      your_build_master_20210811.4   𐄂 Fail     2021-08-11T01:21:50.6766667Z
 114      your_build_master_20210811.3   𐄂 Fail     2021-08-11T00:22:18.8291786Z
 ```
+
+- options
+```
+Usage: dnazart hist [-n=<limit>] ORG PRJ
+
+list builds history
+               
+Arguments:     
+  ORG          organization
+  PRJ          project
+               
+Options:       
+  -n, --num    limit number of output, 0: no limit (default 0)
+```
+
+## Download artifact from build
+
+- download artifact from latest build.
+
+```bash
+$ dnazart download <organization> <project>
+```
+
+
+- download from a specific build
+
+```bash
+$ dnazart download <organization> <project> <BuildId>
+```
+
+- options
+
+```
+Usage: dnazart download [-d] [-f] [-o=<output path>] ORG PRJ [BUILDID]
+
+download artifacts
+                
+Arguments:      
+  ORG           organization
+  PRJ           project
+  BUILDID       build id (default "latest")
+                
+Options:        
+  -d, --dry     dry-run, print download url without actual downloading
+  -f, --force   overwrite if output file exists
+  -o, --out     output directory (default ".")
+```
+

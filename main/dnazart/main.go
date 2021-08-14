@@ -30,11 +30,11 @@ func checkPAT() string {
 }
 
 func History(cmd *cli.Cmd) {
-	cmd.Spec = "[-n] ORG PRJ"
+	cmd.Spec = "[-n=<limit>] ORG PRJ"
 	var (
 		pOrg = cmd.StringArg("ORG", "", "organization")
 		pPrj = cmd.StringArg("PRJ", "", "project")
-		pN   = cmd.IntOpt("n num", 0, "limit number of output")
+		pN   = cmd.IntOpt("n num", 0, "limit number of output, 0: no limit")
 	)
 
 	cmd.Action = func() {
@@ -79,10 +79,10 @@ func Download(cmd *cli.Cmd) {
 	var (
 		pOrg     = cmd.StringArg("ORG", "", "organization")
 		pPrj     = cmd.StringArg("PRJ", "", "project")
-		pBuildId = cmd.StringArg("BUILDID", "latest", "build id, default is 'latest'")
+		pBuildId = cmd.StringArg("BUILDID", "latest", "build id")
 		pDry     = cmd.BoolOpt("d dry", false, "dry-run, print download url without actual downloading")
 		pForce   = cmd.BoolOpt("f force", false, "overwrite if output file exists")
-		pOut     = cmd.StringOpt("o out", ".", "output directory, default is '.'")
+		pOut     = cmd.StringOpt("o out", ".", "output directory")
 	)
 
 	cmd.Action = func() {
