@@ -1,6 +1,6 @@
 # Download Azure Pipeline Artifacts
 
-`dnazart` requires PAT from environment variable
+To use `dnazart`, it is required to set PAT environment variable
 
 ```bash
 $ export AZURE_DEVOPS_EXT_PAT='xxxxxxxx'
@@ -8,7 +8,7 @@ $ export AZURE_DEVOPS_EXT_PAT='xxxxxxxx'
 
 ## Usage
 
-```bash
+```
 $ dnazart --help
 
 Usage: dnazart COMMAND [arg...]
@@ -25,8 +25,8 @@ Run 'dnazart COMMAND --help' for more information on a command.
 
 ## List build history
 
-```bash
-$ dnazart list <organization> <project>
+```
+$ dnazart history <organization> <project>
 ```
 
 - output example
@@ -45,7 +45,7 @@ BuildId  BuildNumber                     Status     FinishTime
 
 - options
 ```
-Usage: dnazart hist [-n=<limit>] ORG PRJ
+Usage: dnazart history [-n=<limit>] ORG PRJ
 
 list builds history
                
@@ -61,14 +61,14 @@ Options:
 
 - download artifact from latest build.
 
-```bash
+```
 $ dnazart download <organization> <project>
 ```
 
 
 - download from a specific build
 
-```bash
+```
 $ dnazart download <organization> <project> <BuildId>
 ```
 
