@@ -8,33 +8,34 @@ import (
 	"net/http"
 )
 
-func GetBuildList(azureOrg, azurePrj, azurePAT string) *BuildList {
+func GetArtifactList(azureOrg, azurePrj string, buildId int, azurePAT string) (*ArtifactList, error) {
 	// build request
 	reqAuth := fmt.Sprintf("username:%s", azurePAT)
 	reqBearer := fmt.Sprintf("Basic %s", base64.StdEncoding.EncodeToString([]byte(reqAuth)))
-	url := fmt.Sprintf("https://dev.azure.com/%s/%s/_apis/build/builds?api-version=4.1", azureOrg, azurePrj)
+	url := fmt.Sprintf("https://dev.azure.com/%s/%s/_apis/build/builds/%d/artifacts?api-version=4.1", azureOrg, azurePrj, buildId)
 	req, err := http.NewRequest("GET", url, nil)
 	if err != nil {
-		panic(err)
+		return nil, err
 	}
 	req.Header.Add("Authorization", reqBearer)
 
 	client := &http.Client{}
 	rsp, err := client.Do(req)
 	if err != nil {
-		panic(err)
+		return nil, err
 	}
 	defer rsp.Body.Close()
 
 	body, err := ioutil.ReadAll(rsp.Body)
 	if err != nil {
-		panic(err)
-	}
-	bl := BuildList{}
-	err = json.Unmarshal(body, &bl)
-	if err != nil {
-		panic(err)
+		return nil, err
 	}
 
-	return &bl
+	al := ArtifactList{}
+	err = json.Unmarshal(body, &al)
+	if err != nil {
+		return nil, err
+	}
+
+	return &al, nil
 }

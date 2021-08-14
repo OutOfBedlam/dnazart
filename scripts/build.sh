@@ -22,12 +22,12 @@ fi
 if [ -d ".git" ]; then
 	VERSION=$(git describe --tags --abbrev=0)
 	GITSHA=$(git rev-parse --short HEAD)
-	LDFLAGS="$LDFLAGS -X $MODNAME/internal/server.versionString=${VERSION}"
-	LDFLAGS="$LDFLAGS -X $MODNAME/internal/server.versionGitSHA=${GITSHA}"
+	LDFLAGS="$LDFLAGS -X $MODNAME/internal/az.versionString=${VERSION}"
+	LDFLAGS="$LDFLAGS -X $MODNAME/internal/az.versionGitSHA=${GITSHA}"
 fi
 GOVERSTR=$(go version | sed -r 's/go version go(.*)\ .*/\1/')
-LDFLAGS="$LDFLAGS -X $MODNAME/internal/server.goVersionString=${GOVERSTR}"
-LDFLAGS="$LDFLAGS -X $MODNAME/internal/server.buildTimestamp=$(date "+%Y-%m-%dT%H:%M:%S")"
+LDFLAGS="$LDFLAGS -X $MODNAME/internal/az.goVersionString=${GOVERSTR}"
+LDFLAGS="$LDFLAGS -X $MODNAME/internal/az.buildTimestamp=$(date "+%Y-%m-%dT%H:%M:%S")"
 
 # Set final Go environment options
 LDFLAGS="$LDFLAGS -extldflags '-static'"
