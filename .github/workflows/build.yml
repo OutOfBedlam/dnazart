@@ -20,8 +20,8 @@ jobs:
         lfs: false
     - name: Setup golang
       uses: actions/setup-go@v2
-        with:
-          go-version: '1.16'
+      with:
+        go-version: '1.16'
     - run: ./scripts/package.sh Linux   linux   amd64
     - run: ./scripts/package.sh Mac     darwin  amd64
     - run: ./scripts/package.sh Windows windows amd64
