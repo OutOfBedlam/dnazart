@@ -15,7 +15,7 @@ echo Packaging $PLATFORM Binary
 
 # Remove previous build directory, if needed.
 bdir=$PKGNAME-$VERSION-$GOOS-$GOARCH
-rm -rf packages/$bdir && mkdir -p packages/$bdir
+rm -f packages/$bdir && mkdir -p packages/$bdir
 
 # Make the binaries.
 GOOS=$GOOS GOARCH=$GOARCH make all
