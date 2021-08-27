@@ -20,25 +20,30 @@ func main() {
 	app.Run(os.Args)
 }
 
-func checkPAT() string {
-	azPAT := os.Getenv("AZURE_DEVOPS_EXT_PAT")
-	if len(azPAT) == 0 {
-		fmt.Println("require 'AZURE_DEVOPS_EXT_PAT' environment variable")
-		os.Exit(1)
+func checkPAT(p string) string {
+	if len(p) > 0 {
+		return p
+	} else {
+		azPAT := os.Getenv("AZURE_DEVOPS_EXT_PAT")
+		if len(azPAT) == 0 {
+			fmt.Println("require 'AZURE_DEVOPS_EXT_PAT' environment variable")
+			os.Exit(1)
+		}
+		return azPAT
 	}
-	return azPAT
 }
 
 func History(cmd *cli.Cmd) {
-	cmd.Spec = "[-n=<limit>] ORG PRJ"
+	cmd.Spec = "[-n=<limit>] [-p=<PAT>] ORG PRJ"
 	var (
 		pOrg = cmd.StringArg("ORG", "", "organization")
 		pPrj = cmd.StringArg("PRJ", "", "project")
 		pN   = cmd.IntOpt("n num", 0, "limit number of output, 0: no limit")
+		pP   = cmd.StringOpt("p pat", "", "PAT")
 	)
 
 	cmd.Action = func() {
-		azPAT := checkPAT()
+		azPAT := checkPAT(*pP)
 
 		bl := az.GetBuildList(*pOrg, *pPrj, azPAT)
 		currentDefinition := ""
@@ -75,7 +80,7 @@ func History(cmd *cli.Cmd) {
 }
 
 func Download(cmd *cli.Cmd) {
-	cmd.Spec = "[-d] [-f] [-o=<output path>] ORG PRJ [BUILDID]"
+	cmd.Spec = "[-d] [-f] [-p=<PAT>] [-o=<output path>] ORG PRJ [BUILDID]"
 	var (
 		pOrg     = cmd.StringArg("ORG", "", "organization")
 		pPrj     = cmd.StringArg("PRJ", "", "project")
@@ -83,10 +88,11 @@ func Download(cmd *cli.Cmd) {
 		pDry     = cmd.BoolOpt("d dry", false, "dry-run, print download url without actual downloading")
 		pForce   = cmd.BoolOpt("f force", false, "overwrite if output file exists")
 		pOut     = cmd.StringOpt("o out", ".", "output directory")
+		pP       = cmd.StringOpt("p pat", "", "PAT")
 	)
 
 	cmd.Action = func() {
-		azPAT := checkPAT()
+		azPAT := checkPAT(*pP)
 		buildId := -1
 
 		if *pBuildId == "latest" {

@@ -6,6 +6,12 @@ To use `dnazart`, it is required to set PAT environment variable
 $ export AZURE_DEVOPS_EXT_PAT='xxxxxxxx'
 ```
 
+or it is also possible passing *PAT* with argument `-p`
+
+```bash
+$ dnazart -p xxxxxxxx .... other args ...
+```
+
 ## Usage
 
 ```
@@ -45,7 +51,7 @@ BuildId  BuildNumber                     Status     FinishTime
 
 - options
 ```
-Usage: dnazart history [-n=<limit>] ORG PRJ
+Usage: dnazart hist [-n=<limit>] [-p=<PAT>] ORG PRJ
 
 list builds history
                
@@ -55,6 +61,7 @@ Arguments:
                
 Options:       
   -n, --num    limit number of output, 0: no limit (default 0)
+  -p, --pat    PAT
 ```
 
 ## Download artifact from build
@@ -75,7 +82,7 @@ $ dnazart download <organization> <project> <BuildId>
 - options
 
 ```
-Usage: dnazart download [-d] [-f] [-o=<output path>] ORG PRJ [BUILDID]
+Usage: dnazart download [-d] [-f] [-p=<PAT>] [-o=<output path>] ORG PRJ [BUILDID]
 
 download artifacts
                 
@@ -88,5 +95,6 @@ Options:
   -d, --dry     dry-run, print download url without actual downloading
   -f, --force   overwrite if output file exists
   -o, --out     output directory (default ".")
+  -p, --pat     PAT
 ```
 
